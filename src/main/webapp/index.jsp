@@ -30,17 +30,13 @@
                 sh 'mvn clean package'
             }
 			}
-			stage('Maven Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-			}
+			
 	     stage('Sonar CA') {
             steps {
                 script {
              withSonarQubeEnv('sonar-server') {
                  sh '''
-                 $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=java_web_App \
+                 $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=java_web \
                  -Dsonar.projectKey=java_web_App
                  '''
              }
