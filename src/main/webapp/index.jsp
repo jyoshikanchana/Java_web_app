@@ -50,7 +50,7 @@
        }
 	   stage('Docker run') {
            steps {
-            sh 'docker run -d -p 4000:3000 kanchanajyoshi/javawebapp:latest'
+            sh 'docker run -d -p 8090:8080 kanchanajyoshi/javawebapp:latest'
             }
        }
 	   }
