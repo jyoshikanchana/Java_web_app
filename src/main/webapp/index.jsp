@@ -2,7 +2,7 @@
 <body>
 <h1>Hi........ Hellow world!!!!!!!!!!</h1>
 <h1>This is simple java web application</h1>
-<h1>Jenkins integartion with Git, Maven, sonar and Docker</h1>
+<h1>Jenkins integartion with Git, Maven, sonar and Docker. Below are the steps</h1>
 <p>pipeline {
     agent {
             label 'slave1'
@@ -35,6 +35,18 @@
                 sh 'mvn clean package'
             }
 			}
+	     stage('Sonar CA') {
+            steps {
+                script {
+             withSonarQubeEnv('sonar-server') {
+                 sh '''
+                 $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=java_web_App \
+                 -Dsonar.projectKey=java_web_App
+                 '''
+             }
+            }
+            }
+        }
 	    stage('docker image build') {
          steps {
            script {
