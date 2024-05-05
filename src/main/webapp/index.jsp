@@ -2,69 +2,12 @@
 <body>
 <h1>Hi........ Hellow world!!!!!!!!!!</h1>
 <h1>This is simple java web application</h1>
-<h1>Jenkins integartion with Git, Maven, sonar and Docker. Below are the steps</h1>
-<p>pipeline {
-    agent {
-            label 'slave1'
-        }
-        tools {
-          maven 'maven-3.9.6'  
-        }
-		 environment {
-         SCANNER_HOME=tool 'sonar-scanner'
-     }
-
-       stages {
-        stage('Clean workspace') {
-            steps {
-                cleanWs()
-            }
-        }
-          stage('Git clone') {
-            steps {
-               git credentialsId: 'git-creds', url: 'https://github.com/jyoshikanchana/Maven1.git'
-            }
-        }
-         stage('Maven Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-			}
-			
-	     stage('Sonar CA') {
-            steps {
-                script {
-             withSonarQubeEnv('sonar-server') {
-                 sh '''
-                 $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=java_web \
-                 -Dsonar.projectKey=java_web_App
-                 '''
-             }
-            }
-            }
-        }
-	    stage('docker image build') {
-         steps {
-           script {
-              withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {
-               sh '''
-                 docker build -t javawebapp .
-                 docker tag javawebapp:latest kanchanajyoshi/javawebapp:latest
-                 docker push kanchanajyoshi/javawebapp:latest
-             	 '''
-                }   
-             }
-         }
-       }
-	   stage('Docker run') {
-           steps {
-            sh 'docker run -d -p 8090:8080 kanchanajyoshi/javawebapp:latest'
-            }
-       }
-	   }
-	   }
-</p>
-
-
+<h1>Application Deployed on EKS Cluster using CICD process.</h1>
+<h2>Git - source code repo
+   maven - java build tool
+   SonarQube - for code quality checking
+   Docker - to build image and push to docker registry
+   Kubernetes - to deploy on EKS cluster
+</h2>
 </body>
 </html>
